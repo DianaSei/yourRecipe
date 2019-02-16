@@ -1,0 +1,11 @@
+<div id="columns">
+	<% @recipes.each do |r| %>
+
+		<figure>
+	  		<%= image_tag r["image_url"] %>
+			<figcaption>
+				<h5> "#{y["title"]}" </h5>	
+			</figcaption>
+		</figure>
+	<% end %>
+  </div>
