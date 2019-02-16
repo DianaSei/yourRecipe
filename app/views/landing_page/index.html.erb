@@ -5,8 +5,12 @@
 <div id="content">
 	<h1>Welcome to YourRecipe!</h1>
 	<p>Search what you want to cook today</p>
-	<form class="form-inline my-2 my-lg-0 d-flex justify-content-center">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
+		<form class="form-inline justify-content-center text-light">
+		     <input class="form-control mr-sm-2 d-inline-block" type="search" placeholder="Chicken breast" aria-label="Search" name="ingredient" required value="<%=params[:ingredient]%>"> 
+		     <button class="btn my-2 my-sm-0 d-inline-block" style="color: white; background-color: #3ac9c6" type="submit">Search</button>
+   		</form>
 </div>
+
+<% if params[:ingredient].present?%>
+	<%= render "search"%>
+<%end%>
