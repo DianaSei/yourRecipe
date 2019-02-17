@@ -36,7 +36,7 @@
       </ul>
         <div class="d-flex justify-content-end">
           <%if signed_in? %>
-          <p style="color: white; margin-right: 20px"><%= current_user.first_name + current_user.last_name%></p>
+          <%= link_to current_user.first_name + current_user.last_name, user_path(current_user.id), style: "color: white; margin-right: 20px" %>
           <%=link_to "Sign out", sign_out_path %>
           <!-- Button trigger modal -->
           <%else%>

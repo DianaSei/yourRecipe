@@ -1,0 +1,22 @@
+<%= form_with url: user_recipe_index_path(user_id: current_user.id), scope: :recipe, local: true do |form| %>
+
+<div class = "container col-md-10 text-center">
+  <div class="text-field">	
+
+    <%= form.label :title, :style => "font-size: 18px" %>
+    <%= form.text_field :title, type: 'form-control', :class => "form-control" %>
+  </div>
+ <br/>
+
+  <div class="text-field">	
+    <%= form.label :ingredients, :style => "font-size: 18px" %>
+    <%= form.text_field :ingredients, type: 'form-control', :class => "form-control" %>
+  </div>
+ <br/>
+
+  <div>
+  <%= form.submit :class => "btn btn-outline", :style => "border-color: #3ac9c6; color: #3ac9c6" %>
+  </div>
+
+</div>
+<%end%>

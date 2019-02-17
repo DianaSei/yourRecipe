@@ -1,0 +1,31 @@
+<div class="container recipes">
+	<% @recipes.each do |r| %>
+
+		<figure>
+			<%if r.image != nil %>
+	  			<%= image_tag r.image %>
+	  		<%end%>
+			<figcaption>
+				<h5><%= link_to r.title %></h5>
+				<p><%=r.ingredients%></p>
+				<%if current_user.admin? && r.verify != true %>
+					<%= form_with url: verify_path(r.id), scope: :recipe, local: true do |form| %> 
+						<button class = "btn btn-outline-success"> Accept </button>
+						<%end%>
+					<%= form_with url: unverify_path(r.id), scope: :recipe, local: true do |form| %> 
+						<button class = "btn btn-outline-danger"> Decline </button>
+						<%end%>
+				<%end%>
+				<% if r.verify? %>
+					<p>Accepted</p>
+				<%else%>
+					<p>Unverified</p>
+				<%end%>
+
+
+			</figcaption>
+		</figure>
+	
+	<% end %>
+  
+  </div>

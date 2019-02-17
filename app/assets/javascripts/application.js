@@ -11,7 +11,7 @@
 // about supported directives.
 //
 //= require rails-ujs
-//= jquery_ujs
+//= require jquery_ujs
 //= require activestorage
 //= require turbolinks
 //= require_tree .
@@ -28,3 +28,4 @@ function show_login()
   $("#login_div").fadeIn();
  });
 }
+

@@ -1,0 +1,20 @@
+<%= link_to "Create my own recipe", new_recipe_path %> <br/>
+<%= link_to "My recipes", user_recipe_index_path(current_user.id) %>
+
+<h1 class="text-center">Here are all your favorite recipes:</h1>
+
+<div class="container recipes">
+	<% @recipes.each do |r| %>
+
+		<figure>
+			<%if r.image != nil %>
+	  			<%= image_tag r.image %>
+	  		<%end%>
+			<figcaption>
+				<h5><%= link_to r.title, r.source_url %></h5>
+			</figcaption>
+		</figure>
+	
+	<% end %>
+  
+  </div>
