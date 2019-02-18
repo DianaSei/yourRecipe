@@ -1,33 +1,23 @@
-<div class="container recipes">
-	<% @recipes.each do |r| %>
-
-		<figure>
+<h1 class="text-center">My favourites: </h1>
+	<div class="row">
+		<% @recipes.each do |r| %>
+  		<div class="col-sm-3">
+		<div class="card">
 			<%if r.picture != nil %>
-	  			<%= image_tag r.picture %>
-	  		<%else%>
-	  			<%= image_tag r.image.url%>
-	  		<%end%>
-			<figcaption>
-				<%if r.source == nil%>
-					<h5><%= link_to r.title, user_path(r.reference_id) %></h5>
-				<%else%>
-					<a href="<%=r.source%>"><h5><%=r.title%></h5></a>
+		    	<img src="<%=r.picture%>" class="card-img-top">
+		    <%else%>
+		    	<img src="<%=r.image.url%>" class="card-img-top">
+		    <%end%>
+		    <div class="card-body">
+		      <%if r.source == nil%>
+		      <a href="<%=user_path(r.reference_id)%>"><h5 class="card-title"><%=r.title%></h5></a>
+		      <%else%>
+					<a href="<%=r.source%>"><h5 class="card-title"><%=r.title%></h5></a>
 				<%end%>
-				<p><%=r.ingredients%></p>
-				<%if current_user.admin? && r.verify != true %>
-					<%= form_with url: verify_path(r.id), scope: :recipe, local: true do |form| %> 
-						<button class = "btn btn-outline-success"> Accept </button>
-						<%end%>
-					<%= form_with url: unverify_path(r.id), scope: :recipe, local: true do |form| %> 
-						<button class = "btn btn-outline-danger"> Decline </button>
-						<%end%>
-				<%end%>
-
-
-
-			</figcaption>
-		</figure>
-	
-	<% end %>
-  
-  </div>
+		      <p class="card-text"><%=r.ingredients%></p>
+		      <p class="card-text"><%=r.description%></p>
+			</div>
+		</div>
+	 </div>
+		<% end %>
+	</div>

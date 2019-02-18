@@ -1,53 +1,61 @@
-<div class="container recipes">
-	<% @recipes.each do |r| %>
-		<figure>
+<div class="row">
+		<% @recipes.each do |r| %>
+		<div class="col-sm-3">
+		<div class="card">
 			<%if r.picture != nil%>
-				<%=image_tag r.picture%>
-			<%else%>
-				<%= image_tag r.image.url%>
+		    	<img src="<%=r.picture%>" class="card-img-top">
+		    <%else%>
+				<img src="<%=r.image.url%>" class="card-img-top">
 			<%end%>
-			<figcaption>
-				<%if r.source == nil%>
-					<h5><%= link_to r.title, user_path(r.reference_id) %></h5>
-				<%else%>
-					<a href="<%=r.source%>"><h5><%=r.title%></h5></a>
-				<%end%>
-				<%if @users_recipes.find_by(user_id: current_user.id) && @users_recipes.find_by(recipe_id: r.id)%>
+		    <div class="card-body">
+		    <%if r.source == nil%>
+		    	<a href="<%=user_path(r.reference_id)%>"><h5 class="card-title"><%=r.title%></h5></a>
+		    <%else%>
+		    	<a href="<%=r.source%>"><h5 class="card-title"><%=r.title%></h5></a>
+		    <%end%>
+		    <%if @users_recipes.find_by(user_id: current_user.id) && @users_recipes.find_by(recipe_id: r.id)%>
 				<i class="fas fa-heart" style="color: red"></i>
-				<%else%>
+			<%else%>
 				<div class="add">
 				<%=link_to "Add to my favourites", user_recipe_create_path(user_id: current_user.id, id: r.id), method: :post, remote: true, class: "span"%>	
-				<i class="fas fa-heart hided icon" style="color: red"></i>
+				<i class="fas fa-heart hide-icon icon" style="color: red"></i>
 				</div>
- 				<%end%>
+ 			<%end%>
 				<br/>
-				<div class="like" id="<%=r.votes.count%>">
-				<%= link_to "Like", vote_path(r.id), remote: true, method: :post , class: "vote-btn", id: r.votes.count %>
-				<p class="vote-count"> Likes: <%=r.votes.count%> </p>
-	 			</div>
-			</figcaption>
-		</figure>
-	<% end %>
-  </div>
+
+			<div class="like" >
+			<%= link_to "Like", vote_path(r.id), remote: true, method: :post , class: "vote-btn"%>
+				<div id='vote-count'>
+					<%=render partial: 'vote', locals: {r: r} %>
+				</div> 			
+			</div>
+			</div>
+		</div>
+		</div>
+		<% end %>
+</div>
 
   <style type="text/css">
-  	.hided{
-  		display: none;
-  	}
+  	
+.hide-icon{
+  display: none;
+}
   </style>
 
   <script type="text/javascript">
+
+
  	$('.like').click(function(event){
  	var button = $(this).children('.vote-btn');
- 	button.addClass("hided");
+ 	button.addClass("hide-icon");
  	});
 
 
 	$('.add').click(function(event){
 	var span = $(this).children('.span');
 	var icon = $(this).children('.icon')
-	span.addClass("hided");
-	icon.removeClass("hided");
+	span.addClass("hide-icon");
+	icon.removeClass("hide-icon");
 	});
 
   </script>

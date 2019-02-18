@@ -38,18 +38,12 @@ class RecipeController < ApplicationController
 
 	def upvote
 		@recipe = Recipe.find(params[:id])
-		@vote = Vote.new(recipe_id: params[:id], user_id: current_user.id)
-			
-			vote_count = @recipe.votes.count
+		@recipe.liked_by current_user
 
-		if @vote.save! 
-			vote_count +=1
-
-			respond_to do |format|
-		      format.js 
-		   	end
-		
-		end
+		respond_to do |format|
+	      format.js 
+	   	end
+	   	
 	end
 
 	def admin
