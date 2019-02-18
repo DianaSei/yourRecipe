@@ -17,6 +17,14 @@ gem 'uglifier', '>= 1.3.0'
 # gem 'mini_racer', platforms: :ruby
 
 gem 'jquery-rails'
+# Gem to upload the images
+gem 'carrierwave', '~> 1.0'
+
+#Gem for likes
+gem 'acts_as_votable', '~> 0.12.0'
+
+#Mini magik to reformat images
+gem "mini_magick"
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'

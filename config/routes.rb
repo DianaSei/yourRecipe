@@ -20,6 +20,6 @@ post '/users/:user_id/recipe/:id' => "users_recipe#create", as: 'user_recipe_cre
 post "/recipe/:id/verify" => "recipe#verify", as: "verify"
 post "/recipe/:id/unverify" => "recipe#unverify", as: "unverify"
 post "/recipe/:id/votes" => "recipe#upvote", as: "vote"
-
+get "/recipes/admin" => "recipe#admin", as: "admin"
 
 end

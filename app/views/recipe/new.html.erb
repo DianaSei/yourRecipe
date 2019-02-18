@@ -12,6 +12,16 @@
     <%= form.label :ingredients, :style => "font-size: 18px" %>
     <%= form.text_field :ingredients, type: 'form-control', :class => "form-control" %>
   </div>
+
+  <div class="text-field">  
+    <%= form.label :how_to_cook, :style => "font-size: 18px" %>
+    <%= form.text_field :description, type: 'form-control', :class => "form-control" %>
+  </div>
+
+  <div>
+    <%= form.label :image %>
+    <%= form.file_field :image, :class => "form-control" %>
+  </div>
  <br/>
 
   <div>

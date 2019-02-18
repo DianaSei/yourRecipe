@@ -1,53 +1,53 @@
 <div class="container recipes">
 	<% @recipes.each do |r| %>
-
 		<figure>
-			<%if r.image != nil%>
-	  		<%= image_tag r.image %>
-	  		<%end%>
+			<%if r.picture != nil%>
+				<%=image_tag r.picture%>
+			<%else%>
+				<%= image_tag r.image.url%>
+			<%end%>
 			<figcaption>
-				<h5><%= link_to r.title, r.source_url %></h5>
-				<%=link_to "Add to my favourites", user_recipe_create_path(user_id: current_user.id, id: r.id), method: :post%>	
-				<%if r.source_url == nil%>
-				<form>
-		 			<spin class="vote-count-<%=r.id%>"> Likes: <%=r.votes.count%></spin> 
-		 			<button class="btn btn-primary vote-btn" type = "submit" value = "<%=r.id%>"> Like</button>
-	 			</form>
-	 			<%end%>
+				<%if r.source == nil%>
+					<h5><%= link_to r.title, user_path(r.reference_id) %></h5>
+				<%else%>
+					<a href="<%=r.source%>"><h5><%=r.title%></h5></a>
+				<%end%>
+				<%if @users_recipes.find_by(user_id: current_user.id) && @users_recipes.find_by(recipe_id: r.id)%>
+				<i class="fas fa-heart" style="color: red"></i>
+				<%else%>
+				<div class="add">
+				<%=link_to "Add to my favourites", user_recipe_create_path(user_id: current_user.id, id: r.id), method: :post, remote: true, class: "span"%>	
+				<i class="fas fa-heart hided icon" style="color: red"></i>
+				</div>
+ 				<%end%>
+				<br/>
+				<div class="like" id="<%=r.votes.count%>">
+				<%= link_to "Like", vote_path(r.id), remote: true, method: :post , class: "vote-btn", id: r.votes.count %>
+				<p class="vote-count"> Likes: <%=r.votes.count%> </p>
+	 			</div>
 			</figcaption>
 		</figure>
-	
 	<% end %>
-  
   </div>
 
+  <style type="text/css">
+  	.hided{
+  		display: none;
+  	}
+  </style>
+
   <script type="text/javascript">
-  	$('.vote-btn').click(function(event){
-	event.preventDefault();
-	var recipeId = event.target.value 
-	console.log(recipeId)
-	$.ajax({
-		method: 'POST', 
-		url: `/recipe/${recipeId}/votes`,
-		dataType: 'JSON',
-		success: function(data){
-			console.log(data)
-			if(data.message == 'Successful'){
-				$(`.vote-count-${recipeId}`).html(`Likes: ${data.new_count}`)
-			}else if (data.message == 'Failed'){
-				alert('You have already voted!')
-	}
-			},
-			error: function(errors){
-				console.log(errors)
-		}
+ 	$('.like').click(function(event){
+ 	var button = $(this).children('.vote-btn');
+ 	button.addClass("hided");
+ 	});
+
+
+	$('.add').click(function(event){
+	var span = $(this).children('.span');
+	var icon = $(this).children('.icon')
+	span.addClass("hided");
+	icon.removeClass("hided");
 	});
-
-});
-
-
-
-
-
 
   </script>

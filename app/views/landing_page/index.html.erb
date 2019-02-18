@@ -12,21 +12,20 @@
 </div>
 
 
+<br/>
+<h1 class="text-center"> The profiles of other users with more recipes: </h1><br/>
+
 <div id="search-div" class="d-flex justify-content-center form-inline my-2 my-lg-0 d-inline-block">
-          <%= form_tag trip_actions_path(params[:trip_id]), id: "action-search", method: :get do %>
-
-            <%= text_field_tag "term", nil, id: "search", list: "list", placeholder: "Search", class: "form-control mr-sm-2" %>
-           	<%= hidden_field_tag(:actiontype, value = params[:actiontype]) %>
-
-            <datalist id="list"></datalist>
-          <% end %>
+     <%= form_with url: users_path, method: :get, local: true do |form| %> 
+      <%=form.text_field :first_name, class: "form-control mr-sm-2", placeholder: "Name" %>
+      <%= form.submit "Search", :class => "btn btn-outline-success my-2 my-sm-0"%>
+    <% end%>    
 </div>
 
-<h1> The profiles of other users with more recipes: </h1>
 <%@users.each do |u| %>
-	<% user_recipces = @recipes.where(reference_id: u.id) %>
+	<% user_recipces = @recipes.where(reference_id: u.id, verify: true) %>
 	<%if user_recipces.length > 0 %>
-	<p> <%= u.first_name + u.last_name %></p>
+	<a href="<%=user_path(u.id)%>"> <%= u.first_name + u.last_name %></a>
 	<ul>
 	 <%user_recipces.each do |ur|%>
 	 	<li> <%= ur.title %> </li>

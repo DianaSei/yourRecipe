@@ -3,7 +3,7 @@ class RecipeController < ApplicationController
 	skip_before_action :verify_authenticity_token
 
 	def index
-		@recipes = Recipe.where(reference_id: current_user.id)
+		@recipes = current_user.recipes
 	end
 
 	def new
@@ -15,7 +15,7 @@ class RecipeController < ApplicationController
 		@recipe.publisher = current_user.first_name
 		@recipe.reference_id = current_user.id
 		if @recipe.save
-			redirect_to root_path
+			redirect_to user_path(current_user.id)
 		end
 	end
 
@@ -25,7 +25,7 @@ class RecipeController < ApplicationController
 		if recipe.verify == nil
 			recipe.update(verify: true)
 		end
-			redirect_to root_path
+			redirect_to admin_path
 	end
 
 	def unverify
@@ -33,7 +33,7 @@ class RecipeController < ApplicationController
 		if recipe.verify == nil
 			recipe.update(verify: false)
 		end
-			redirect_to root_path	
+			redirect_to admin_path
 	end
 
 	def upvote
@@ -46,15 +46,14 @@ class RecipeController < ApplicationController
 			vote_count +=1
 
 			respond_to do |format|
-		      format.json { message :'Successful'}
-		      format.html { new_count :vote_count }
+		      format.js 
 		   	end
-		else
-			respond_to do |format|
-		      format.json { message :'Failed'}
-		      format.html { new_count :vote_count }
-		   	end
+		
 		end
+	end
+
+	def admin
+		@recipes = Recipe.where(verify: nil)
 	end
 
 	private
@@ -62,6 +61,8 @@ class RecipeController < ApplicationController
 		params.require(:recipe).permit(
 		  :title, 
 		  :ingredients,
+		  :description,
+		  :image,
 		)	 
 	end
 	

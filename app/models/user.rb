@@ -11,4 +11,6 @@ class User < ApplicationRecord
 	enum role: [:customer, :admin]
 
 	has_secure_password
+
+	scope :first_name, -> (first_name) { where("first_name ILIKE ?", "%#{first_name}%") }
 end

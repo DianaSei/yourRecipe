@@ -1,18 +1,14 @@
+
+<h1 class="text-center">Please verify these recipes: </h1>
 <div class="container recipes">
 	<% @recipes.each do |r| %>
 
 		<figure>
-			<%if r.picture != nil %>
-	  			<%= image_tag r.picture %>
-	  		<%else%>
-	  			<%= image_tag r.image.url%>
+			<%if r.image != nil %>
+	  			<%= image_tag r.image.url %>
 	  		<%end%>
 			<figcaption>
-				<%if r.source == nil%>
-					<h5><%= link_to r.title, user_path(r.reference_id) %></h5>
-				<%else%>
-					<a href="<%=r.source%>"><h5><%=r.title%></h5></a>
-				<%end%>
+				<h5><%= link_to r.title %></h5>
 				<p><%=r.ingredients%></p>
 				<%if current_user.admin? && r.verify != true %>
 					<%= form_with url: verify_path(r.id), scope: :recipe, local: true do |form| %> 
@@ -22,8 +18,6 @@
 						<button class = "btn btn-outline-danger"> Decline </button>
 						<%end%>
 				<%end%>
-
-
 
 			</figcaption>
 		</figure>

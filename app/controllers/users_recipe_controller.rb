@@ -6,7 +6,9 @@ class UsersRecipeController < ApplicationController
 	def create
 		userRecipe = UsersRecipe.new(user_id: params[:user_id], recipe_id: params[:id])
 			if userRecipe.save
-			redirect_to root_path
+			respond_to do |format|
+		      format.js 
+		   	end
 		end
 	end
 end

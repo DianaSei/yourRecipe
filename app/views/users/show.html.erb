@@ -1,20 +1,44 @@
-<%= link_to "Create my own recipe", new_recipe_path %> <br/>
-<%= link_to "My recipes", user_recipe_index_path(current_user.id) %>
 
-<h1 class="text-center">Here are all your favorite recipes:</h1>
+<%if current_user.id == @user.id && current_user.admin? %>
+	<%= link_to "Verify recipes of other users", admin_path %> <br/>
+<%elsif current_user.id == @user.id%>
+	<%= link_to "Create my own recipe", new_recipe_path %> <br/>
+	<%= link_to "My favourite recipes", user_recipe_index_path(current_user.id) %>
 
-<div class="container recipes">
-	<% @recipes.each do |r| %>
-
-		<figure>
-			<%if r.image != nil %>
-	  			<%= image_tag r.image %>
-	  		<%end%>
-			<figcaption>
-				<h5><%= link_to r.title, r.source_url %></h5>
-			</figcaption>
-		</figure>
-	
+	<h1 class="text-center"> My recipes: </h1>
+	<%@my_recipes.each do |my_r|%>
+	<figure>
+		<%=image_tag my_r.image.url%>
+		<figcaption>
+			<h5><%= my_r.title %></h5>
+			<p><%=my_r.ingredients%></p>
+			<p><%=my_r.description%></p>
+			<% if my_r.verify? %>
+				<p>Status: Accepted</p>
+			<%elsif my_r.verify == false %>
+				<p>Status: Unverified</p>
+			<%else%>
+				<p>Status: Processing</p>
+			<%end%>
+		</figcaption>
+	</figure>
 	<% end %>
-  
-  </div>
+<%else%>
+	<h1 class="text-center">Recipes by this user:</h1>
+	<div class="container recipes">
+		<% @recipes.each do |r| %>
+			<figure>
+				<%if r.image != nil %>
+		  			<%= image_tag r.image %>
+		  		<%end%>
+				<figcaption>
+					<h5><%= r.title %></h5>
+					<p><%=r.ingredients%></p>
+					<p><%=r.description%></p>
+				</figcaption>
+			</figure>	
+		<% end %>
+	 </div>
+<%end%>
+
+
