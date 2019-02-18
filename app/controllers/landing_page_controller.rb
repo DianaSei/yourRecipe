@@ -2,35 +2,57 @@ class LandingPageController < ApplicationController
 	include SessionsHelper
 	require "json"
   	require "http"
+  	require "jbuilder"
+  	require "http/mime_type/adapter"
 
-	def index
-	url = "https://www.food2fork.com/api/search"
-  	#Shows the search form if no paramaters are present
+	def search
+		url = "https://api.edamam.com/search"
+	  	#Shows the search form if no paramaters are present
 
   	
-  	if params[:ingredient].present? 
+	  	if params[:ingredient].present? 
 
-  		response = HTTP.get("https://www.food2fork.com/api/search")
-  		@recipes = response.parse['businesses']
-  		
-  		
-  		@recipes.each do |r|
-  			
-    			if Recipe.find_by(reference_id: r['recipe_id']).present?
-   			  	else
-  	  			# If new, make a new entry
-    				Recipe.create(
-    					publisher: r['publisher'], 
-    					title: r['title'], 
-    					ingredients: r['ingredients'], 
-    					source_url: r['source_url'],
-    					image: r['image_url'],
-    					rank: r['social_rank'],
-    					reference_id: r['recipe_id']
-    				)
-   			end
-  		end
-  	end
+	  	# 	ingredient = params[:ingredient] 
+	  	# 	response = HTTP.get("https://www.food2fork.com/api/search?key=#{ENV['FOOD_2_FORK_API_KEY']}&q=#{params[:ingredient]}") 
+	  	# 	@recipes_json = JSON.parse(response)
+	  	# 	@recipe = @recipes_json["recipes"]
+
+	  		
+	   #  	@recipes =[]
+	  	# 	@recipe.each do |r|
+    # 			if Recipe.find_by(reference_id: r['recipe_id']).present?
+    # 				@old_recipe = Recipe.find_by(reference_id: r['recipe_id'])
+    # 				@recipes << @old_recipe
+   	# 		  	else
+  	 #  			# If new, make a new entry
+    # 				@new_recipe = Recipe.create(
+    # 					publisher: r['publisher'], 
+    # 					title: r['title'], 
+    # 					ingredients: r['ingredients'], 
+    # 					source: r['source_url'],
+    # 					picture: r['image_url'],
+    # 					rank: r['social_rank'],
+    # 					reference_id: r['recipe_id'],
+    # 					verify: true
+    # 				)
+
+    # 				@recipes << @new_recipe
+   	# 			end
+	   # 		end
+
+	   # 		@my_users_recipe = Recipe.find_by("title ILIKE ?", "%#{ingredient}%")
+	   # 		@recipes << @my_users_recipe
+
+
+	   		@recipes = Recipe.all
+	  		@users_recipes = UsersRecipe.all
+	  	end
+	end
+
+
+	def index
+		@users = User.all
+		@recipes = Recipe.all		
 	end
   
 

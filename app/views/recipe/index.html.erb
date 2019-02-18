@@ -1,0 +1,23 @@
+<h1 class="text-center">My favourites: </h1>
+	<div class="row">
+		<% @recipes.each do |r| %>
+  		<div class="col-sm-3">
+		<div class="card">
+			<%if r.picture != nil %>
+		    	<img src="<%=r.picture%>" class="card-img-top">
+		    <%else%>
+		    	<img src="<%=r.image.url%>" class="card-img-top">
+		    <%end%>
+		    <div class="card-body">
+		      <%if r.source == nil%>
+		      <a href="<%=user_path(r.reference_id)%>"><h5 class="card-title"><%=r.title%></h5></a>
+		      <%else%>
+					<a href="<%=r.source%>"><h5 class="card-title"><%=r.title%></h5></a>
+				<%end%>
+		      <p class="card-text"><%=r.ingredients%></p>
+		      <p class="card-text"><%=r.description%></p>
+			</div>
+		</div>
+	 </div>
+		<% end %>
+	</div>

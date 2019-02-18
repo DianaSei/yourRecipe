@@ -1,0 +1,50 @@
+
+<%if current_user.id == @user.id && current_user.admin? %>
+	<%= link_to "Verify recipes of other users", admin_path %> <br/>
+<%elsif current_user.id == @user.id%>
+	<%= link_to "Create my own recipe", new_recipe_path %> <br/>
+	<%= link_to "My favourite recipes", user_recipe_index_path(current_user.id) %>
+
+	<h1 class="text-center"> My recipes: </h1><br/>
+
+	<div class="row">
+		<%@my_recipes.each do |my_r|%>
+		<div class="col-sm-3">
+		  	<div class="card">
+		    <img src="<%=my_r.image.url%>" class="card-img-top">
+		    <div class="card-body">
+		      <h5 class="card-title"><%= my_r.title %></h5>
+		      <p class="card-text"><%=my_r.ingredients%></p>
+		      <p class="card-text"><%=my_r.description%></p>
+		      <% if my_r.verify? %>
+		      	<p class="card-text"><small class="text-muted">Status: Accepted</small></p>
+				<%elsif my_r.verify == false %>
+					<p class="card-text"><small class="text-muted">Status: Unverified</small></p>
+				<%else%>
+					<p class="card-text"><small class="text-muted">Status: Processing</small></p>
+				<%end%>
+		    </div>
+		 	</div>
+		</div>
+	  <%end%>
+	</div>
+<%else%>
+	<h1 class="text-center">Recipes by this user:</h1>
+	<div class="row">
+		<% @recipes.each do |r| %>
+		<div class="col-sm-3">
+		<div class="card">
+		    <img src="<%=r.image.url%>" class="card-img-top">
+		    <div class="card-body">
+		      <h5 class="card-title"><%= r.title %></h5>
+		      <p class="card-text"><%=r.ingredients%></p>
+		      <p class="card-text"><%=r.description%></p>
+			</div>
+		</div>
+		</div>
+		<% end %>
+	 </div>
+<%end%>
+
+
+

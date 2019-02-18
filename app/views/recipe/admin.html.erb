@@ -1,0 +1,26 @@
+
+<h1 class="text-center">Please verify these recipes: </h1>
+	<div class="row">
+		<% @recipes.each do |r| %>
+		<div class="col-sm-3">
+		<div class="card">
+			<%if r.image != nil %>
+		    <img src="<%=r.image.url%>" class="card-img-top">
+		    <%end%>
+		    <div class="card-body">
+		      <a href="<%=user_path(r.reference_id)%>"><h5 class="card-title"><%=r.title%></h5></a>
+		      <p class="card-text"><%=r.ingredients%></p>
+		      <p class="card-text"><%=r.description%></p>
+		      <%if current_user.admin? && r.verify != true %>
+				<%= form_with url: verify_path(r.id), scope: :recipe, local: true do |form| %> 
+					<button class = "btn btn-outline-success"> Accept </button>
+					<%end%>
+				<%= form_with url: unverify_path(r.id), scope: :recipe, local: true do |form| %> 
+					<button class = "btn btn-outline-danger"> Decline </button>
+					<%end%>
+			   <%end%>
+			</div>
+		</div>
+		</div>
+		<% end %>
+	 </div>
