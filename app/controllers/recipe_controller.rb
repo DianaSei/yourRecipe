@@ -37,12 +37,14 @@ class RecipeController < ApplicationController
 	end
 
 	def upvote
-		@recipe = Recipe.find(params[:id])
-		@recipe.liked_by current_user
+		@recipe = Recipe.find(params[:id].to_i)
+		if @recipe.liked_by current_user
 
-		respond_to do |format|
-	      format.js 
-	   	end
+        	render json: {'message': 'Successful', 'new_count': @recipe.get_likes.size}.to_json
+        	render html:'landing_page/index'
+        else
+        	p 'WTF'
+        end
 	   	
 	end
 

@@ -24,9 +24,9 @@
 				<br/>
 
 			<div class="like" >
-			<%= link_to "Like", vote_path(r.id), remote: true, method: :post , class: "vote-btn"%>
-				<div id='vote-count'>
-					<%=render partial: 'vote', locals: {r: r} %>
+			<%= link_to "Like", vote_path(r.id), remote: true, method: :post , class: "vote-btn", value: "#{r.id}"%>
+				<div id='vote-count-<%=r.id%>'>
+					<p class="vote-count-<%=r.id%>"> Likes: <%= r.get_likes.size %> </p>
 				</div> 			
 			</div>
 			</div>
@@ -43,6 +43,44 @@
   </style>
 
   <script type="text/javascript">
+
+
+  	$('.vote-btn').click(function(event){
+	event.preventDefault();
+	var recipeId = {
+		'id': $(this).attr('value')
+	}
+	$.ajax({
+		method: 'POST',
+		url: `/recipe/${recipeId['id']}/votes`,
+		data: recipeId,
+		dataType: 'JSON',
+		success: function(data){
+			if(data.message == 'Successful'){
+				console.log("hi")
+				$(`.vote-count-${recipeId['id']}`).html(`Likes: ${data.new_count}`)
+			}else if (data.message == 'Failed'){
+				alert('Sum ting wong')
+			}
+		}
+	});
+	});
+
+
+// 	console.log(recipeId)
+// 	$.ajax({
+// 		method: 'POST', 
+// 		url: `/recipe/${recipeId}/votes`,
+// 		data: recipeId,
+// 		dataType: 'JSON',
+// 		success: function(data){
+// 			console.log(data)
+// 			if(data.message == 'Successful'){
+// 				$(`.vote-count-${recipeId}`).html(`Likes: ${data.new_count}`)
+// 			}else if (data.message == 'Failed'){
+// 				alert('You have already voted!')
+// 	}
+// });
 
 
  	$('.like').click(function(event){
