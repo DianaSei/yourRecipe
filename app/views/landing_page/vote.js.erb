@@ -1,2 +1,2 @@
 
-$(`#vote-count`).html(`<%=escape_javascript render :partial => 'vote', locals: {r: r} %>`);
+$(".vote-count").html("<%=j render :partial => 'vote', locals: {r: r} %>");
