@@ -23,9 +23,6 @@ gem 'carrierwave', '~> 1.0'
 # #Gem semantic for front-end
 gem 'semantic-ui-sass'
 
-#Gem for likes
-gem 'acts_as_votable', '~> 0.12.0'
-
 #Mini magik to reformat images
 gem "mini_magick"
 

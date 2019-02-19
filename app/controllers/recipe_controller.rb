@@ -38,14 +38,19 @@ class RecipeController < ApplicationController
 
 	def upvote
 		@recipe = Recipe.find(params[:id].to_i)
-		if @recipe.liked_by current_user
+		@vote = Vote.new(recipe_id: params[:id], user_id: current_user.id)
+			
+			vote_count = @recipe.votes.count
 
-        	render json: {'message': 'Successful', 'new_count': @recipe.get_likes.size}.to_json
-        	render html:'landing_page/index'
+		if @vote.save! 
+			vote_count +=1
+        	render json: {'message': 'Successful', 'new_count': vote_count}
+
         else
-        	p 'WTF'
-        end
-	   	
+        	render json: {'message': 'Failed', 'new_count': vote_count}
+
+	   	end
+
 	end
 
 	def admin

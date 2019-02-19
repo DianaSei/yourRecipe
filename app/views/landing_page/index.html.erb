@@ -1,0 +1,37 @@
+<div id="background-pic">
+	<img src="/background.jpg" style="width: 100%" id="picture">
+</div>
+
+<div id="content">
+	<h1>Welcome to YourRecipe!</h1>
+	<p>Search what you want to cook today</p>
+		<form class="form-inline justify-content-center text-light" action="/search">
+		     <input class="form-control mr-sm-2 d-inline-block" type="search" placeholder="Chicken breast" aria-label="Search" name="ingredient" required value="<%=params[:ingredient]%>"> 
+		     <button class="btn my-2 my-sm-0 d-inline-block" style="color: white; background-color: #3ac9c6" type="submit">Search</button>
+   		</form>
+</div>
+
+
+<br/>
+<h1 class="text-center"> The profiles of other users with more recipes: </h1><br/>
+
+<div id="search-div" class="d-flex justify-content-center form-inline my-2 my-lg-0 d-inline-block">
+     <%= form_with url: users_path, method: :get, local: true do |form| %> 
+      <%=form.text_field :first_name, class: "form-control mr-sm-2", placeholder: "Name" %>
+      <%= form.submit "Search", :class => "btn btn-outline-success my-2 my-sm-0"%>
+    <% end%>    
+</div>
+
+<%@users.each do |u| %>
+	<% user_recipces = @recipes.where(reference_id: u.id, verify: true) %>
+	<%if user_recipces.length > 0 %>
+	<a href="<%=user_path(u.id)%>"> <%= u.first_name + u.last_name %></a>
+	<ul>
+	 <%user_recipces.each do |ur|%>
+	 	<li> <%= ur.title %> </li>
+	 	<%end%>
+	 </ul>
+	 	<%end%>
+	 <%end%>
+
+
