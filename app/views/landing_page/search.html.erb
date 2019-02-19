@@ -24,10 +24,10 @@
 				<br/>
 
 			<div class="like" >
-			<%= link_to "Like", vote_path(r.id), remote: true, method: :post , class: "vote-btn"%>
-				<div id='vote-count'>
-					<%=render partial: 'vote', locals: {r: r} %>
-				</div> 			
+			<%if !(@votes.find_by(user_id: current_user.id) && @votes.find_by(recipe_id: r.id)) %>
+				<%= link_to "Like", vote_path(r.id), remote: true, method: :post , class: "vote-btn", value: "#{r.id}"%>
+			<%end%>
+				<p class="vote-count-<%=r.id%>"> Likes: <%= r.votes.count %> </p>			
 			</div>
 			</div>
 		</div>
@@ -45,9 +45,30 @@
   <script type="text/javascript">
 
 
+  	$('.vote-btn').click(function(event){
+	event.preventDefault();
+	var recipeId = {
+		'id': $(this).attr('value')
+	}
+	$.ajax({
+		method: 'POST',
+		url: `/recipe/${recipeId['id']}/votes`,
+		data: recipeId,
+		dataType: 'JSON',
+		success: function(data){
+			if(data.message == 'Successful'){
+				$(`.vote-count-${recipeId['id']}`).html(`Likes: ${data.new_count}`)
+			}else if (data.message == 'Failed'){
+			}
+		}
+	});
+	});
+
+
  	$('.like').click(function(event){
  	var button = $(this).children('.vote-btn');
  	button.addClass("hide-icon");
+ 	
  	});
 
 
