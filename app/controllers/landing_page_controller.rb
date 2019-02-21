@@ -15,7 +15,7 @@ class LandingPageController < ApplicationController
 	  		ingredient = params[:ingredient] 
 	  		response = HTTP.get("https://www.food2fork.com/api/search?key=#{ENV['FOOD_2_FORK_API_KEY']}&q=#{params[:ingredient]}") 
 	  		@recipes_json = JSON.parse(response)
-	  		@recipe = nil
+	  		@recipe = @recipes_json["recipes"]
 	  		
 
 	    	@recipes =[]
