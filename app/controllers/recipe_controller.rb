@@ -19,6 +19,27 @@ class RecipeController < ApplicationController
 		end
 	end
 
+	def edit
+		@recipe = Recipe.find(params[:id])
+	end
+
+	def update
+		recipe = Recipe.find(params[:id])
+		recipe.update(recipe_params)
+		recipe.save
+		redirect_to user_path(current_user.id)
+	end
+		
+	def destroy
+		recipe = Recipe.find(params[:id])
+		Recipe.check_fav_recipe(recipe.id)
+		if recipe.destroy
+			redirect_to user_path(current_user.id)
+		else 
+			redirect_to user_path(current_user.id)
+		end
+	end
+
 	def verify
 		recipe = Recipe.find(params[:id])
 

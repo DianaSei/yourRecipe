@@ -5,7 +5,7 @@ root "landing_page#index"
 get 'food2fork/search'
 get 'search', to: 'landing_page#search', as: 'search'
 
-resources :recipe, only: [:new, :create, :destroy]
+resources :recipe
 
 resources :users do
 	resources :recipe

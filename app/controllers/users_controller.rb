@@ -9,6 +9,8 @@ class UsersController < ApplicationController
 		@user = User.find(params[:id])
 		@recipes = Recipe.where(reference_id: @user.id, verify: true)
 		@my_recipes = Recipe.where(reference_id: @user.id)
+		@users_recipes = UsersRecipe.all
+		@votes = Vote.all
 	end
 
 	def create
@@ -23,7 +25,13 @@ class UsersController < ApplicationController
 	end
 
 	def index
-		@users = User.first_name(params[:first_name]) if params[:first_name].present?
+		
+		if params[:first_name].present?
+			@user = User.first_name(params[:first_name]) 
+		else 
+			@user = User.all
+		end
+
 	end
 
 	

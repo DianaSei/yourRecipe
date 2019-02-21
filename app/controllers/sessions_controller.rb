@@ -12,7 +12,7 @@ include SessionsHelper
 	      redirect_to root_url
 	    else
 	      flash[:primary] = "Email or password is invalid"
-	      render "new"
+	      redirect_to root_url
 	    end
  	end
 
