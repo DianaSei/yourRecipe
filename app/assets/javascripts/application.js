@@ -38,6 +38,8 @@ $('.vote-btn').click(function(event){
 	var recipeId = {
 		'id': $(this).attr('value')
 	}
+	console.log('-------------------------')
+	console.log(recipeId);
 	$.ajax({
 		method: 'POST',
 		url: `/recipe/${recipeId['id']}/votes`,
@@ -48,6 +50,8 @@ $('.vote-btn').click(function(event){
 				$(`.vote-count-${recipeId['id']}`).html(`Likes: ${data.new_count}`)
 			}else if (data.message == 'Failed'){
 			}
+		}, error: function(error) {
+			console.log(error);
 		}
 	});
 	});
