@@ -1,0 +1,8 @@
+<h2 class="text-center">Edit Recipe </h2> <br/>
+	<div class="container d-flex justify-content-between">
+   		<div class="d-inline-block" style="width: 60%" >
+			<%= form_for @recipe do |form| %>
+				<%= render partial: '/recipe/form', object: form %>
+		  	<% end %>
+  		</div>
+	</div>

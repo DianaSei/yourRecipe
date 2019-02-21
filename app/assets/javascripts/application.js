@@ -17,6 +17,8 @@
 //= require turbolinks
 //= require_tree .
 
+
+
 function show_signup()
 {
  $("#login_div").fadeOut('fast', function() {
@@ -30,3 +32,38 @@ function show_login()
  });
 }
 
+$(document).ready(function(){
+$('.vote-btn').click(function(event){
+	event.preventDefault();
+	var recipeId = {
+		'id': $(this).attr('value')
+	}
+	$.ajax({
+		method: 'POST',
+		url: `/recipe/${recipeId['id']}/votes`,
+		data: recipeId,
+		dataType: 'JSON',
+		success: function(data){
+			if(data.message == 'Successful'){
+				$(`.vote-count-${recipeId['id']}`).html(`Likes: ${data.new_count}`)
+			}else if (data.message == 'Failed'){
+			}
+		}
+	});
+	});
+
+ 	$('.like').click(function(event){
+ 	var button = $(this).children('.vote-btn');
+ 	button.addClass("hide-icon");
+ 	
+ 	});
+
+
+	$('.add').click(function(event){
+	var span = $(this).children('.span');
+	var icon = $(this).children('.icon')
+	span.addClass("hide-icon");
+	icon.removeClass("hide-icon");
+	});
+
+});
