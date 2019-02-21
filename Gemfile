@@ -51,6 +51,9 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 # Run against the latest stable release
 
+# Heroku gem
+gem 'rails_12factor', group: :production
+
 
 # Or, run against the master branch
 # (requires master-branch versions of all related RSpec libraries)
