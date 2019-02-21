@@ -3,6 +3,8 @@ class UsersRecipeController < ApplicationController
 		userRecipe = UsersRecipe.new
 	end
 
+	#test
+
 	def create
 		userRecipe = UsersRecipe.new(user_id: params[:user_id], recipe_id: params[:id])
 		if userRecipe.save
