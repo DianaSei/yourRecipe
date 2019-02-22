@@ -27,7 +27,7 @@
 				<br/>
 
 				<div class="like" >
-				<%if !(@votes.find_by(user_id: current_user.id) && @votes.find_by(recipe_id: r.id)) %>
+				<%if !(@votes.find_by(user_id: current_user.id, recipe_id: r.id)) %>
 					<%#= link_to "Like", vote_path(r.id), method: :post , class: "vote-btn", value: "#{r.id}"%>
 					<button class='vote-btn btn-outline-success', style="border-radius: 10px", value="<%= r.id %>">Like</button>
 					
