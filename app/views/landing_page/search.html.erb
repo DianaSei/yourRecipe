@@ -20,7 +20,7 @@
 					<i class="fas fa-heart" style="color: red"></i>
 				<%else%>
 					<div class="add">
-					<%=link_to "Add to my favourites", user_recipe_create_path(user_id: current_user.id, id: r.id), method: :post, remote: true, class: "span"%>	
+					<%=link_to "Add to my favourites", user_recipe_create_path(user_id: current_user.id, id: r.id), method: :post, class: "span"%>	
 					<i class="fas fa-heart hide-icon icon" style="color: red"></i>
 					</div>
 	 			<%end%>
@@ -28,7 +28,9 @@
 
 				<div class="like" >
 				<%if !(@votes.find_by(user_id: current_user.id) && @votes.find_by(recipe_id: r.id)) %>
-					<%= link_to "Like", vote_path(r.id), remote: true, method: :post , class: "vote-btn", value: "#{r.id}"%>
+					<%#= link_to "Like", vote_path(r.id), method: :post , class: "vote-btn", value: "#{r.id}"%>
+					<button class='vote-btn btn-outline-success', style="border-radius: 10px", value="<%= r.id %>">Like</button>
+					
 				<%end%>
 					<p class="vote-count-<%=r.id%>"> Likes: <%= r.votes.count %> </p>
 				</div>
@@ -36,48 +38,16 @@
 		</div>
 	</div>
 	<% end %>
+					</form>  
+					<input type="hidden" id="page_is_dirty" name="page_is_dirty" value="0" />
+					  <form name="ignore_me">
 </div>
 
 <script type="text/javascript">
-	
-$('.vote-btn').click(function(event){
-	event.preventDefault();
-	var recipeId = {
-		'id': $(this).attr('value')
-	}
-	console.log('-------------------------')
-	console.log(recipeId);
-
- 	$('.like').click(function(event){
- 	var button = $(this).children('.vote-btn');
- 	button.addClass("hide-icon");
- 	
- 	});
-
-
-	$('.add').click(function(event){
-	var span = $(this).children('.span');
-	var icon = $(this).children('.icon')
-	span.addClass("hide-icon");
-	icon.removeClass("hide-icon");
-	});
-
-
-	$.ajax({
-		method: 'POST',
-		url: `/recipe/${recipeId['id']}/votes`,
-		data: recipeId,
-		dataType: 'JSON',
-		success: function(data){
-			if(data.message == 'Successful'){
-				$(`.vote-count-${recipeId['id']}`).html(`Likes: ${data.new_count}`)
-			}else if (data.message == 'Failed'){
-			}
-		}, error: function(error) {
-			console.log(error);
-		}
-	});
-	});
-
+	var dirty_bit = document.getElementById('page_is_dirty');
+if (dirty_bit.value == '1') window.location.reload();
+function mark_page_dirty() {
+    dirty_bit.value = '1';
+}
 </script>
 

@@ -47,8 +47,6 @@ class LandingPageController < ApplicationController
 
 	    				@recipes << @new_recipe
 	   				end
-
-		   		@my_users_recipe_by_title = Recipe.find_by("title ILIKE ?", "%#{ingredient}%")
 		   		
 		   		end
 		   	else 
