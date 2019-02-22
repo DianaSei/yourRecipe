@@ -74,5 +74,22 @@ RSpec.describe User, type: :model do
 	end
 
 
+	context 'test search custom model method' do
+		it 'gives the result of the search - happy path' do
+			user_1 = User.new(first_name: "first", last_name: "last", email: "name@mail.com", password_digest: "123").save
+	        user_2 = User.new(first_name: "second", last_name: "last", email: "name1@mail.com", password_digest: "123").save
+	        users = User.all
+	        user = User.search("last")
+	        expect(user.length).to eq(users.length)
+		end
+
+		it 'gives an error the result of the search - unhappy path' do
+			user_1 = User.new(first_name: "first", last_name: "last", email: "name@mail.com", password_digest: "123").save
+	        user_2 = User.new(first_name: "second", last_name: "last", email: "name1@mail.com", password_digest: "123").save
+	        users = User.all
+	        expect{ User.search }.to raise_error(ArgumentError)
+		end
+	end
+
 
 end

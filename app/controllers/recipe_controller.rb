@@ -62,9 +62,7 @@ class RecipeController < ApplicationController
 		vote = current_user.votes.new(recipe_id: @recipe.id)
 			
 		if vote.save
-			
         	render json: {'message': 'Successful', 'new_count': @recipe.votes.count}
-
         else
         	render json: {'message': 'Failed', 'new_count': @recipe.votes.count}
 

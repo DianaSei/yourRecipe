@@ -25,9 +25,10 @@ class UsersController < ApplicationController
 	end
 
 	def index
-		
-		if params[:first_name].present?
-			@user = User.first_name(params[:first_name]) 
+
+		search_name = params[:first_name]
+		if search_name.present?
+			@user = User.search(search_name)
 		else 
 			@user = User.all
 		end
