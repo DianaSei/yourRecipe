@@ -40,6 +40,22 @@ $('.vote-btn').click(function(event){
 	}
 	console.log('-------------------------')
 	console.log(recipeId);
+
+ 	$('.like').click(function(event){
+ 	var button = $(this).children('.vote-btn');
+ 	button.addClass("hide-icon");
+ 	
+ 	});
+
+
+	$('.add').click(function(event){
+	var span = $(this).children('.span');
+	var icon = $(this).children('.icon')
+	span.addClass("hide-icon");
+	icon.removeClass("hide-icon");
+	});
+
+
 	$.ajax({
 		method: 'POST',
 		url: `/recipe/${recipeId['id']}/votes`,
@@ -56,18 +72,5 @@ $('.vote-btn').click(function(event){
 	});
 	});
 
- 	$('.like').click(function(event){
- 	var button = $(this).children('.vote-btn');
- 	button.addClass("hide-icon");
- 	
- 	});
-
-
-	$('.add').click(function(event){
-	var span = $(this).children('.span');
-	var icon = $(this).children('.icon')
-	span.addClass("hide-icon");
-	icon.removeClass("hide-icon");
-	});
 
 });
