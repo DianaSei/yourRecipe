@@ -51,7 +51,7 @@ class LandingPageController < ApplicationController
 		   		end
 		   	else 
 		   		@recipes = Recipe.all
-		   		flash[:warning] = "Seems like our provider went down or there is no such ingredient! There are some suggestions for you from YourRecipe!"
+		   		# flash[:warning] = "Seems like our provider went down or there is no such ingredient! There are some suggestions for you from YourRecipe!"
 	   		end
 	   		
 	  		@users_recipes = UsersRecipe.all
