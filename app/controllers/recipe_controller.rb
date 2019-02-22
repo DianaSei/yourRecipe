@@ -59,14 +59,9 @@ class RecipeController < ApplicationController
 
 	def upvote
 		@recipe = Recipe.find(params[:id])
-		# @vote = Vote.new(recipe_id: @recipe.id, user_id: current_user.id)
-		# vote = current_user.votes.new(recipe_id: @recipe.id)
-			# byebug
-			# vote_count = @recipe.votes.count
-
-
-		if current_user.votes.create(recipe_id: @recipe.id)
-			# vote_count +=1
+		vote = current_user.votes.new(recipe_id: @recipe.id)
+			
+		if vote.save
 			
         	render json: {'message': 'Successful', 'new_count': @recipe.votes.count}
 

@@ -20,7 +20,7 @@
 					<i class="fas fa-heart" style="color: red"></i>
 				<%else%>
 					<div class="add">
-					<%=link_to "Add to my favourites", user_recipe_create_path(user_id: current_user.id, id: r.id), method: :post, remote: true, class: "span"%>	
+					<%=link_to "Add to my favourites", user_recipe_create_path(user_id: current_user.id, id: r.id), method: :post, class: "span"%>	
 					<i class="fas fa-heart hide-icon icon" style="color: red"></i>
 					</div>
 	 			<%end%>
@@ -28,7 +28,8 @@
 
 				<div class="like" >
 				<%if !(@votes.find_by(user_id: current_user.id) && @votes.find_by(recipe_id: r.id)) %>
-					<%= link_to "Like", vote_path(r.id), remote: true, method: :post , class: "vote-btn", value: "#{r.id}"%>
+					<%#= link_to "Like", vote_path(r.id), method: :post , class: "vote-btn", value: "#{r.id}"%>
+					<button class='vote-btn btn-outline-success', style="border-radius: 10px", value="<%= r.id %>">Like</button>
 					
 				<%end%>
 					<p class="vote-count-<%=r.id%>"> Likes: <%= r.votes.count %> </p>
