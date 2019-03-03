@@ -17,8 +17,6 @@
 //= require turbolinks
 //= require_tree .
 
-
-
 function show_signup()
 {
  $("#login_div").fadeOut('fast', function() {
@@ -38,16 +36,16 @@ $(document).ready(function(){
 	 	var button = $(this).children('.vote-btn');
 	 	button.addClass("hide-icon");
 	 	
-	 	});
+	 });
 
 
-		$('.add').click(function(event){
+	$('.add').click(function(event){
 		var span = $(this).children('.span');
 		var icon = $(this).children('.icon')
 		span.addClass("hide-icon");
 		icon.removeClass("hide-icon");
-		});
-		
+	});
+
 	$('.vote-btn').click(function(event){
 		event.preventDefault();
 		var recipeId = {
@@ -69,10 +67,6 @@ $(document).ready(function(){
 				console.log(error);
 			}
 		});
-
-	 	
-
-
-		
+	
 	});
 });

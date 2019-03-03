@@ -1,3 +1,5 @@
+<%= javascript_pack_tag 'application' %>
+
 <div id="background-pic">
 	<img src="/background.jpg" style="width: 100%" id="picture">
 </div>
@@ -6,7 +8,7 @@
 	<h1>Welcome to YourRecipe!</h1>
 	<p>Search what you want to cook today</p>
 		<form class="form-inline justify-content-center text-light" action="/search">
-		     <input class="form-control mr-sm-2 d-inline-block" type="search" placeholder="Chicken breast" aria-label="Search" value="<%=params[:ingredient]%>" name="ingredient" required > 
+		     <input class="form-control mr-sm-2 d-inline-block" type="search" placeholder="Chicken" aria-label="Search" value="<%=params[:ingredient]%>" name="ingredient" required > 
 		     <button class="btn btn-primary my-2 my-sm-0 d-inline-block" type="submit">Search</button>
    		</form>
 </div>
@@ -14,7 +16,7 @@
 
 <br/>
 <h1 class="text-center"> The profiles of other users with more recipes: </h1><br/>
-
+<%= react_component("HelloWorld", { greeting: "Hello from Diana." }) %>
 <div class="d-flex justify-content-center form-inline my-2 my-lg-0 d-inline-block">
 
      <%= form_with url: users_path, method: :get, local: true do |form| %> 
